@@ -104,7 +104,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		if(file != NULL){
 			
 			int x = 0, y = 0;
-			int flag = 0;
+			int was_error = 0;
 
 			char buffer[MAX_SIZE];
 
@@ -117,7 +117,7 @@ int _tmain(int argc, _TCHAR* argv[])
 					if(!error){ // убрать ! после отладки обработки ошибки
 						my_perror("Произошла ошибка"); // 
 						printf("При считывании %d строки из файла", count_str);
-						flag = 1;
+						was_error = 1;
 						break;
 					} else {
 						MagStr(buffer);
@@ -126,12 +126,10 @@ int _tmain(int argc, _TCHAR* argv[])
 					}	
 				}
 			}
-			if(flag == 0){
+			if(!was_error){
 				printf("Финальная координата = %d, %d\n", x, y);
-				fclose(file);
-			} else {
-				fclose(file);
 			}
+			fclose(file);
 		} else {
 			printf("Ошибка открытия файла %s\n", argv[1]);
 		}
