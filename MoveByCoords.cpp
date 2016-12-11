@@ -6,9 +6,12 @@
 #include <cstdio>
 #include <conio.h>
 #include <cstring>
+#include "Key.h"
 
-#define MAX_SIZE 101
+#define START_STR_SIZE 8
+#define INCREMENTS 4
 #define MAX_SIZE_STR_NUMB 20
+
 
 void MagStr (char *str)
 {
@@ -25,7 +28,8 @@ void MagStr (char *str)
 			if((flag == 1) && ((str[i - 1] == ' ') || (str[i - 1] == '\t'))){
 				str[j] = ' ';
 				j++;
-			} else {
+			}
+			if(flag == 0){
 				flag = 1;
 			}
 			str[j] = str[i];
@@ -37,16 +41,10 @@ void MagStr (char *str)
 
 void Bias(char *str, int count_str, int *x, int *y)
 {
-	static const char West[]  = "Запад";
-	static const char East[]  = "Восток";
-	static const char North[] = "Север";
-	static const char South[] = "Юг";
 	
 	int Strlen_Str = strlen(str);
 
 	if (Strlen_Str > 0){
-
-		int i, j;
 
 		char *adr_space = NULL;
 		adr_space = strchr(str, ' ');
@@ -84,14 +82,6 @@ void Bias(char *str, int count_str, int *x, int *y)
 	}
 }
 
-// dummy function
-void my_perror(char *s)
-{
-	char errstr[] = "Input/output error 5";
-
-	printf("%s: %s\n", s, errstr);
-}
-
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_CTYPE, "Russian_Russia.1251");
@@ -103,33 +93,46 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 		if(file != NULL){
 			
-			int x = 0, y = 0;
+			int x = 0, y = 0, i = 0;
 			int was_error = 0;
 
-			char buffer[MAX_SIZE];
+			char *buffer = (char*) malloc(sizeof(char) * START_STR_SIZE);
+			if (buffer != NULL){
+				
+				int count_str = 1;
+				int Str_Size = START_STR_SIZE;
 
-			int count_str = 1;
-	
-			while(!feof(file)){
-				if (fgets(buffer, MAX_SIZE, file)){
-					int error;
-					error = ferror(file);
-					if(!error){ // убрать ! после отладки обработки ошибки
-						my_perror("Произошла ошибка"); // 
-						printf("При считывании %d строки из файла", count_str);
-						was_error = 1;
-						break;
-					} else {
-						MagStr(buffer);
-						Bias(buffer, count_str, &x, &y);
-						count_str++;
-					}	
+				while(!feof(file)){
+					
+					if(i >= Str_Size){ 
+						Str_Size = (Str_Size + INCREMENTS);
+						buffer = (char*) realloc(buffer, ((Str_Size) * sizeof(char)));
+					}
+
+					buffer[i] = getc(file);
+
+						if(ferror(file)){ 
+							printf("Произошла ошибка: %s при считывании строки %d\n", sys_errlist[errno], count_str);
+							was_error = 1;
+							break;
+						}
+						if (buffer[i] == '\n'){
+							buffer[i] = '\0';
+							MagStr(buffer);
+							Bias(buffer, count_str, &x, &y);
+							count_str++;
+							i = -1; /** Для того чтобы запись каждой новой строки начиналась с 0 эллемента */
+						}
+						i++;
 				}
+				if(!was_error){
+					printf("Финальная координата = %d, %d\n", x, y);
+				}
+				fclose(file);
+				free(buffer);
+			} else {
+				printf("Недостаточно памяти");
 			}
-			if(!was_error){
-				printf("Финальная координата = %d, %d\n", x, y);
-			}
-			fclose(file);
 		} else {
 			printf("Ошибка открытия файла %s\n", argv[1]);
 		}
@@ -137,6 +140,5 @@ int _tmain(int argc, _TCHAR* argv[])
 		printf("Файл с координатами не получен\n");
 		printf("Для работы с данным продуктом пожалуйста укажите путь к текстовому файлу содержащему координаты\n");
 	}
-
 	system("pause");
 }
