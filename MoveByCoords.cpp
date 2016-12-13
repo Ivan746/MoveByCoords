@@ -69,18 +69,24 @@ void Bias(char *str, int count_str, int *x, int *y)
 						if (!strncmp(West, str, Numb_simv)){
 							*x -= atoi(buffer);
 						} else {
-							printf("Cтрока № %i не совпадает ни с 1 из сторон света\n", count_str);
+							printf(Str_Err1, count_str);
 						}
 					}
 				}
 			}
 		} else {
-			 printf("Cтрока № %i состоит из 1 слова\n", count_str);
+			 printf(Str_Err2, count_str);
 		}
 	} else {
-		printf("Cтрока № %i пустая\n", count_str);
+		printf(Str_Err3, count_str);
 	}
 }
+
+void My_perror (char* str_error, int count_str)
+{
+	printf(Str_Err4, str_error, count_str);
+}
+
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -107,12 +113,19 @@ int _tmain(int argc, _TCHAR* argv[])
 					if(i >= Str_Size){ 
 						Str_Size = (Str_Size + INCREMENTS);
 						buffer = (char*) realloc(buffer, ((Str_Size) * sizeof(char)));
-					}
 
+						if(buffer == NULL){
+							printf(Str_Err5);
+							was_error = 1;
+							break;
+						}
+					}
+						
 					buffer[i] = getc(file);
 
 						if(ferror(file)){ 
-							printf("Произошла ошибка: %s при считывании строки %d\n", sys_errlist[errno], count_str);
+							//printf("Произошла ошибка: %s при считывании строки %d\n", sys_errlist[errno], count_str);
+							My_perror(strerror(errno), count_str);
 							was_error = 1;
 							break;
 						}
@@ -128,17 +141,17 @@ int _tmain(int argc, _TCHAR* argv[])
 				if(!was_error){
 					printf("Финальная координата = %d, %d\n", x, y);
 				}
-				fclose(file);
 				free(buffer);
 			} else {
-				printf("Недостаточно памяти");
+				printf(Str_Err5);
 			}
+			fclose(file);
 		} else {
-			printf("Ошибка открытия файла %s\n", argv[1]);
+			printf(Str_Err6, argv[1]);
 		}
 	} else {
-		printf("Файл с координатами не получен\n");
-		printf("Для работы с данным продуктом пожалуйста укажите путь к текстовому файлу содержащему координаты\n");
+		printf(Str_Err7);
+		printf(Str_Err8);
 	}
 	system("pause");
 }
