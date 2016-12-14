@@ -69,22 +69,22 @@ void Bias(char *str, int count_str, int *x, int *y)
 						if (!strncmp(West, str, Numb_simv)){
 							*x -= atoi(buffer);
 						} else {
-							printf(Str_Err1, count_str);
+							My_Printer(1, count_str);
 						}
 					}
 				}
 			}
 		} else {
-			 printf(Str_Err2, count_str);
+			 My_Printer(2, count_str);
 		}
 	} else {
-		printf(Str_Err3, count_str);
+		My_Printer(3, count_str);
 	}
 }
 
 void My_perror (char* str_error, int count_str)
 {
-	printf(Str_Err4, str_error, count_str);
+	My_Printer(4, str_error, count_str);
 }
 
 
@@ -115,7 +115,7 @@ int _tmain(int argc, _TCHAR* argv[])
 						buffer = (char*) realloc(buffer, ((Str_Size) * sizeof(char)));
 
 						if(buffer == NULL){
-							printf(Str_Err5);
+							My_Printer(5);
 							was_error = 1;
 							break;
 						}
@@ -139,19 +139,20 @@ int _tmain(int argc, _TCHAR* argv[])
 						i++;
 				}
 				if(!was_error){
-					printf("Финальная координата = %d, %d\n", x, y);
+					My_Printer(9, x, y);
 				}
 				free(buffer);
 			} else {
-				printf(Str_Err5);
+				My_Printer(5);
 			}
 			fclose(file);
 		} else {
-			printf(Str_Err6, argv[1]);
+			My_Printer(6, argv[1]);
 		}
 	} else {
-		printf(Str_Err7);
-		printf(Str_Err8);
+		My_Printer(7);
+		My_Printer(8);
 	}
 	system("pause");
 }
+
