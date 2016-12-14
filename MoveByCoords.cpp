@@ -139,7 +139,7 @@ int _tmain(int argc, _TCHAR* argv[])
 						i++;
 				}
 				if(!was_error){
-					printf("Финальная координата = %d, %d\n", x, y);
+					printf(Str_Res, x, y);
 				}
 				free(buffer);
 			} else {
