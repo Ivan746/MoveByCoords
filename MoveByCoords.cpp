@@ -69,24 +69,34 @@ void Bias(char *str, int count_str, int *x, int *y)
 						if (!strncmp(West, str, Numb_simv)){
 							*x -= atoi(buffer);
 						} else {
-							printf(Str_Err1, count_str);
+							printf(StrErr_NotAWorldSide, count_str);
+							printf("\n");
 						}
 					}
 				}
 			}
 		} else {
-			 printf(Str_Err2, count_str);
+			 printf(StrErr2_OneWordOnly, count_str);
+			 printf("\n");
 		}
 	} else {
-		printf(Str_Err3, count_str);
+		printf(StrErr3_EmptyStr, count_str);
+		printf("\n");
 	}
 }
 
-void My_perror (char* str_error, int count_str)
+/*void My_perror (char* str_error, int count_str)
 {
-	printf(Str_Err4, str_error, count_str);
+	printf(StrErr4_CouldNotRead, str_error, count_str);
+	printf("\n");
 }
+*/
 
+void My_perrorV2(int count_str)
+{
+	printf("При считывании строки № %d", count_str);
+	perror(" произошла ошибка");
+}
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -115,7 +125,8 @@ int _tmain(int argc, _TCHAR* argv[])
 						buffer = (char*) realloc(buffer, ((Str_Size) * sizeof(char)));
 
 						if(buffer == NULL){
-							printf(Str_Err5);
+							printf(StrErr5_NotMemory);
+							printf("\n");
 							was_error = 1;
 							break;
 						}
@@ -125,7 +136,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 						if(ferror(file)){ 
 							//printf("Произошла ошибка: %s при считывании строки %d\n", sys_errlist[errno], count_str);
-							My_perror(strerror(errno), count_str);
+							//My_perror(strerror(errno), count_str);
+							My_perrorV2(count_str);
 							was_error = 1;
 							break;
 						}
@@ -140,18 +152,21 @@ int _tmain(int argc, _TCHAR* argv[])
 				}
 				if(!was_error){
 					printf(Str_Res, x, y);
+					printf("\n");
 				}
 				free(buffer);
 			} else {
-				printf(Str_Err5);
+				printf(StrErr5_NotMemory);
+				printf("\n");
 			}
 			fclose(file);
 		} else {
-			printf(Str_Err6, argv[1]);
+			printf(StrErr6_ErrorOpeningFile, argv[1]);
+			printf("\n");
 		}
 	} else {
-		printf(Str_Err7);
-		printf(Str_Err8);
+		printf(StrErr7_FileNotReceived);
+		printf("\n");
 	}
 	system("pause");
 }
