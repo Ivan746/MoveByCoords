@@ -69,16 +69,16 @@ void Bias(char *str, int count_str, int *x, int *y)
 						if (!strncmp(West, str, Numb_simv)){
 							*x -= atoi(buffer);
 						} else {
-							My_Printer(NotAWorldSide, count_str);
+							My_PrinterV2(NotAWorldSide, count_str);
 						}
 					}
 				}
 			}
 		} else {
-			 My_Printer(OneWordOnly, count_str);
+			 My_PrinterV2(OneWordOnly, count_str);
 		}
 	} else {
-		My_Printer(EmptyStr, count_str);
+		My_PrinterV2(EmptyStr, count_str);
 	}
 }
 
@@ -109,7 +109,7 @@ int _tmain(int argc, _TCHAR* argv[])
 						buffer = (char*) realloc(buffer, ((Str_Size) * sizeof(char)));
 
 						if(buffer == NULL){
-							My_Printer(NotMemory);
+							My_PrinterV2(NotMemory);
 							was_error = 1;
 							break;
 						}
@@ -118,7 +118,7 @@ int _tmain(int argc, _TCHAR* argv[])
 					buffer[i] = getc(file);
 
 						if(ferror(file)){ 
-							My_Printer(CouldNotRead, count_str);
+							My_PrinterV2(CouldNotRead, count_str);
 							was_error = 1;
 							break;
 						}
@@ -137,15 +137,16 @@ int _tmain(int argc, _TCHAR* argv[])
 				}
 				free(buffer);
 			} else {
-				My_Printer(NotMemory);
+				My_PrinterV2(NotMemory);
 			}
 			fclose(file);
 		} else {
-			My_Printer(ErrorOpeningFile, argv[1]);
+			My_PrinterV2(ErrorOpeningFile, 0 ,argv[1]); // пришлось использовать "магический " 0 , так как нельзя не задав 2 эл задать 3
 		}
 	} else {
-		My_Printer(FileNotReceived);
+		My_PrinterV2(FileNotReceived);
 	}
 	system("pause");
 }
+
 
