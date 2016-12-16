@@ -15,11 +15,11 @@ extern const char StrErr7_FileNotReceived[];
 extern const char Str_Res[];
 
 extern const enum error {NotAWorldSide = 1, OneWordOnly, EmptyStr, CouldNotRead, NotMemory, ErrorOpeningFile, FileNotReceived};
-
+/*
 extern void My_Printer(error WhenNotMem_or_FileNotReceived);
 extern void My_Printer(error WhenErrorOpeningFile, char* NameFile);
 extern void My_Printer(error WhenErrorInProcessingStr, int NumbStr);
-
+*/
+extern void My_PrinterV2(error WhenErrorInProcessingStr, int count_str = 0, char* NameFile = "");
 extern void Print_Enter();
-
 
