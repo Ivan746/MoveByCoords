@@ -1,17 +1,15 @@
 #pragma once
 
-#pragma once
+const char West[]  = "Запад";
+const char East[]  = "Восток";
+const char North[] = "Север";
+const char South[] = "Юг";
 
-char West[];
-char East[];
-char North[];
-char South[];
-char Str_Err1[];
-char Str_Err2[];
-char Str_Err3[];
-char Str_Err4[];
-char Str_Err5[];
-char Str_Err6[];
-char Str_Err7[];
-char Str_Err8[];
-char Str_Res[];
+const char StrErr_NotAWorldSide[] = "Cтрока № %d не совпадает ни с 1 из сторон света";
+const char StrErr2_OneWordOnly[] = "Cтрока № %d состоит из 1 слова";
+const char StrErr3_EmptyStr[] = "Cтрока № %d пустая";
+const char StrErr4_CouldNotRead[] = "Произошла ошибка: %s при считывании строки %d";
+const char StrErr5_NotMemory[] = "Недостаточно памяти";
+const char StrErr6_ErrorOpeningFile[] = "Ошибка открытия файла %s";
+const char StrErr7_FileNotReceived[] = "Файл с координатами не получен\n Для работы с данным продуктом пожалуйста укажите путь к текстовому файлу содержащему координаты ";
+const char Str_Res[] = "Финальная координата = %d, %d";
