@@ -69,24 +69,18 @@ void Bias(char *str, int count_str, int *x, int *y)
 						if (!strncmp(West, str, Numb_simv)){
 							*x -= atoi(buffer);
 						} else {
-							My_Printer(1, count_str);
+							My_Printer(NotAWorldSide, count_str);
 						}
 					}
 				}
 			}
 		} else {
-			 My_Printer(2, count_str);
+			 My_Printer(OneWordOnly, count_str);
 		}
 	} else {
-		My_Printer(3, count_str);
+		My_Printer(EmptyStr, count_str);
 	}
 }
-
-void My_perror (char* str_error, int count_str)
-{
-	My_Printer(4, str_error, count_str);
-}
-
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -115,7 +109,7 @@ int _tmain(int argc, _TCHAR* argv[])
 						buffer = (char*) realloc(buffer, ((Str_Size) * sizeof(char)));
 
 						if(buffer == NULL){
-							My_Printer(5);
+							My_Printer(NotMemory);
 							was_error = 1;
 							break;
 						}
@@ -124,8 +118,7 @@ int _tmain(int argc, _TCHAR* argv[])
 					buffer[i] = getc(file);
 
 						if(ferror(file)){ 
-							//printf("Произошла ошибка: %s при считывании строки %d\n", sys_errlist[errno], count_str);
-							My_perror(strerror(errno), count_str);
+							My_Printer(CouldNotRead, count_str);
 							was_error = 1;
 							break;
 						}
@@ -139,19 +132,19 @@ int _tmain(int argc, _TCHAR* argv[])
 						i++;
 				}
 				if(!was_error){
-					My_Printer(9, x, y);
+					printf(Str_Res, x, y);
+					Print_Enter();
 				}
 				free(buffer);
 			} else {
-				My_Printer(5);
+				My_Printer(NotMemory);
 			}
 			fclose(file);
 		} else {
-			My_Printer(6, argv[1]);
+			My_Printer(ErrorOpeningFile, argv[1]);
 		}
 	} else {
-		My_Printer(7);
-		My_Printer(8);
+		My_Printer(FileNotReceived);
 	}
 	system("pause");
 }
