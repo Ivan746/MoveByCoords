@@ -1,85 +1,57 @@
 #include "stdafx.h"
 #include "Key.h"
 
-
 void Print_Enter()
 {
 	printf("\n");
 }
-/*
-void My_Printer(error numb, int count_str)
+
+void My_PrinterV2(STR_ERRORS numb, int NumbStr = 0, char* NameFile_or_StrError = "")
 {
 	switch(numb)
 	{
-		case(NotAWorldSide):
-			printf(StrErr_NotAWorldSide, count_str);
+		case(STR_NOT_A_WORLD_SIDE):
+			printf(StrErr_NotAWorldSide, NumbStr);
 			break;
-		case(OneWordOnly):
-			printf(StrErr2_OneWordOnly, count_str);
+		case(STR_ONE_WORD_ONLY):
+			printf(StrErr_OneWordOnly, NumbStr);
 			break;
-		case(EmptyStr):
-			printf(StrErr3_EmptyStr, count_str);
+		case(STR_EMPTY_STR):
+			printf(StrErr_EmptyStr, NumbStr);
 			break;
-		case(CouldNotRead):
-			printf(StrErr4_CouldNotRead, count_str);
-			perror(" произошла ошибка");
+		case(STR_COULD_NOT_READ):
+			printf(StrErr_CouldNotRead, NumbStr, NameFile_or_StrError);
+			break;
+		case(STR_NOT_MEMORY):
+			printf(StrErr_NotMemory);
+			break;
+		case(STR_FILE_NOT_RECEIVED):
+			printf(StrErr_FileNotReceived);
+			break;
+		case (STR_ERROR_OPENING_FILE):
+			printf(StrErr_ErrorOpeningFile, NameFile_or_StrError);
 			break;
 	}
 	Print_Enter();
 }
 
-void My_Printer(error numb)
+
+void My_Printer(STR_ERRORS numb, int NumbStr)
 {
-	switch(numb)
-	{
-		case(NotMemory):
-			printf(StrErr5_NotMemory);
-			break;
-		case(FileNotReceived):
-			printf(StrErr7_FileNotReceived);
-			break;
-		
-	}
-	Print_Enter();
+	My_PrinterV2(numb, NumbStr);
 }
 
-void My_Printer(error numb, char* File_Name)
+void My_Printer(STR_ERRORS numb)
 {
-	switch(numb)
-	{
-		case (ErrorOpeningFile):
-			printf(StrErr6_ErrorOpeningFile, File_Name);
-			break;
-	}
-	Print_Enter();
+	My_PrinterV2(numb);
 }
-*/
-void My_PrinterV2(error numb, int count_str, char* NameFile)
+
+void My_Printer(STR_ERRORS numb, char* NameFile)
 {
-	switch(numb)
-	{
-		case(NotAWorldSide):
-			printf(StrErr_NotAWorldSide, count_str);
-			break;
-		case(OneWordOnly):
-			printf(StrErr2_OneWordOnly, count_str);
-			break;
-		case(EmptyStr):
-			printf(StrErr3_EmptyStr, count_str);
-			break;
-		case(CouldNotRead):
-			printf(StrErr4_CouldNotRead, count_str);
-			perror(" произошла ошибка");
-			break;
-		case(NotMemory):
-			printf(StrErr5_NotMemory);
-			break;
-		case(FileNotReceived):
-			printf(StrErr7_FileNotReceived);
-			break;
-		case (ErrorOpeningFile):
-			printf(StrErr6_ErrorOpeningFile, NameFile);
-			break;
-	}
-	Print_Enter();
+	My_PrinterV2(numb, 0, NameFile);
+}
+
+void My_Printer(STR_ERRORS numb, int NumbStr, char* StrError)
+{
+	My_PrinterV2(numb, NumbStr, StrError);
 }
