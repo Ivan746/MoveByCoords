@@ -69,16 +69,16 @@ void Bias(char *str, int count_str, int *x, int *y)
 						if (!strncmp(West, str, Numb_simv)){
 							*x -= atoi(buffer);
 						} else {
-							My_PrinterV2(NotAWorldSide, count_str);
+							My_Printer(STR_NOT_A_WORLD_SIDE, count_str);
 						}
 					}
 				}
 			}
 		} else {
-			 My_PrinterV2(OneWordOnly, count_str);
+			 My_Printer(STR_ONE_WORD_ONLY, count_str);
 		}
 	} else {
-		My_PrinterV2(EmptyStr, count_str);
+		My_Printer(STR_EMPTY_STR, count_str);
 	}
 }
 
@@ -109,7 +109,7 @@ int _tmain(int argc, _TCHAR* argv[])
 						buffer = (char*) realloc(buffer, ((Str_Size) * sizeof(char)));
 
 						if(buffer == NULL){
-							My_PrinterV2(NotMemory);
+							My_Printer(STR_NOT_MEMORY);
 							was_error = 1;
 							break;
 						}
@@ -117,8 +117,8 @@ int _tmain(int argc, _TCHAR* argv[])
 						
 					buffer[i] = getc(file);
 
-						if(ferror(file)){ 
-							My_PrinterV2(CouldNotRead, count_str);
+						if(!ferror(file)){ 
+							My_Printer(STR_COULD_NOT_READ, count_str, strerror(errno));
 							was_error = 1;
 							break;
 						}
@@ -137,14 +137,14 @@ int _tmain(int argc, _TCHAR* argv[])
 				}
 				free(buffer);
 			} else {
-				My_PrinterV2(NotMemory);
+				My_Printer(STR_NOT_MEMORY);
 			}
 			fclose(file);
 		} else {
-			My_PrinterV2(ErrorOpeningFile, 0 ,argv[1]); // пришлось использовать "магический " 0 , так как нельзя не задав 2 эл задать 3
+			My_Printer(STR_ERROR_OPENING_FILE, argv[1]); 
 		}
 	} else {
-		My_PrinterV2(FileNotReceived);
+		My_Printer(STR_FILE_NOT_RECEIVED);
 	}
 	system("pause");
 }
