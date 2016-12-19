@@ -12,6 +12,10 @@
 #define INCREMENTS 4
 #define MAX_SIZE_STR_NUMB 20
 
+void Print_Enter()
+{
+	printf("\n");
+}
 
 void MagStr (char *str)
 {
@@ -70,33 +74,21 @@ void Bias(char *str, int count_str, int *x, int *y)
 							*x -= atoi(buffer);
 						} else {
 							printf(StrErr_NotAWorldSide, count_str);
-							printf("\n");
+							Print_Enter();
 						}
 					}
 				}
 			}
 		} else {
-			 printf(StrErr2_OneWordOnly, count_str);
-			 printf("\n");
+			 printf(StrErr_OneWordOnly, count_str);
+			 Print_Enter();
 		}
 	} else {
-		printf(StrErr3_EmptyStr, count_str);
-		printf("\n");
+		printf(StrErr_EmptyStr, count_str);
+		Print_Enter();
 	}
 }
 
-/*void My_perror (char* str_error, int count_str)
-{
-	printf(StrErr4_CouldNotRead, str_error, count_str);
-	printf("\n");
-}
-*/
-
-void My_perrorV2(int count_str)
-{
-	printf("При считывании строки № %d", count_str);
-	perror(" произошла ошибка");
-}
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -125,8 +117,8 @@ int _tmain(int argc, _TCHAR* argv[])
 						buffer = (char*) realloc(buffer, ((Str_Size) * sizeof(char)));
 
 						if(buffer == NULL){
-							printf(StrErr5_NotMemory);
-							printf("\n");
+							printf(StrErr_NotMemory);
+							Print_Enter();
 							was_error = 1;
 							break;
 						}
@@ -134,10 +126,17 @@ int _tmain(int argc, _TCHAR* argv[])
 						
 					buffer[i] = getc(file);
 
-						if(ferror(file)){ 
-							//printf("Произошла ошибка: %s при считывании строки %d\n", sys_errlist[errno], count_str);
-							//My_perror(strerror(errno), count_str);
-							My_perrorV2(count_str);
+						if(ferror(file)){
+
+							char txt_error_for_perror[] = "При считывании   строки произошла ошибка ";
+							char str_count_str[MAX_SIZE_STR_NUMB] = "";
+							sprintf(str_count_str, "%d", count_str);
+
+							if ((count_str > 0) && (count_str < 10)){
+								strncpy(txt_error_for_perror+15, str_count_str, 1);
+							}
+							
+							perror(txt_error_for_perror);
 							was_error = 1;
 							break;
 						}
@@ -152,21 +151,21 @@ int _tmain(int argc, _TCHAR* argv[])
 				}
 				if(!was_error){
 					printf(Str_Res, x, y);
-					printf("\n");
+					Print_Enter();
 				}
 				free(buffer);
 			} else {
-				printf(StrErr5_NotMemory);
-				printf("\n");
+				printf(StrErr_NotMemory);
+				Print_Enter();
 			}
 			fclose(file);
 		} else {
-			printf(StrErr6_ErrorOpeningFile, argv[1]);
-			printf("\n");
+			printf(StrErr_ErrorOpeningFile, argv[1]);
+			Print_Enter();
 		}
 	} else {
-		printf(StrErr7_FileNotReceived);
-		printf("\n");
+		printf(StrErr_FileNotReceived);
+		Print_Enter();
 	}
 	system("pause");
 }
