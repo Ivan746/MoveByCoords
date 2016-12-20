@@ -6,29 +6,29 @@ void Print_Enter()
 	printf("\n");
 }
 
-void My_PrinterV2(STR_ERRORS numb, int NumbStr = 0, char* NameFile_or_StrError = "")
+static void My_PrinterV2(STR_ERRORS numb, int NumbStr = 0, char* NameFile_or_StrError = "")
 {
 	switch(numb)
 	{
-		case(STR_NOT_A_WORLD_SIDE):
+		case STR_NOT_A_WORLD_SIDE:
 			printf(StrErr_NotAWorldSide, NumbStr);
 			break;
-		case(STR_ONE_WORD_ONLY):
+		case STR_ONE_WORD_ONLY:
 			printf(StrErr_OneWordOnly, NumbStr);
 			break;
-		case(STR_EMPTY_STR):
+		case STR_EMPTY_STR:
 			printf(StrErr_EmptyStr, NumbStr);
 			break;
-		case(STR_COULD_NOT_READ):
+		case STR_COULD_NOT_READ:
 			printf(StrErr_CouldNotRead, NumbStr, NameFile_or_StrError);
 			break;
-		case(STR_NOT_MEMORY):
+		case STR_NOT_MEMORY:
 			printf(StrErr_NotMemory);
 			break;
-		case(STR_FILE_NOT_RECEIVED):
+		case STR_FILE_NOT_RECEIVED:
 			printf(StrErr_FileNotReceived);
 			break;
-		case (STR_ERROR_OPENING_FILE):
+		case STR_ERROR_OPENING_FILE:
 			printf(StrErr_ErrorOpeningFile, NameFile_or_StrError);
 			break;
 	}
