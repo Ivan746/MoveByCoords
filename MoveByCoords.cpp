@@ -6,15 +6,28 @@
 #include <cstdio>
 #include <conio.h>
 #include <cstring>
+#include "stdarg.h"
 #include "Key.h"
 
 #define START_STR_SIZE 8
 #define INCREMENTS 4
 #define MAX_SIZE_STR_NUMB 20
+#define SIZE_TXT_FOR_PERROR 50
 
 void Print_Enter()
 {
 	printf("\n");
+}
+
+void universal_print_error_message(const char* Txt_Error, ...)
+{
+	va_list ptr;
+
+	va_start(ptr, Txt_Error);
+	vprintf(Txt_Error, ptr);
+	Print_Enter();
+
+	va_end(ptr);
 }
 
 void MagStr (char *str)
@@ -73,19 +86,16 @@ void Bias(char *str, int count_str, int *x, int *y)
 						if (!strncmp(West, str, Numb_simv)){
 							*x -= atoi(buffer);
 						} else {
-							printf(StrErr_NotAWorldSide, count_str);
-							Print_Enter();
+							universal_print_error_message(StrErr_NotAWorldSide, count_str);
 						}
 					}
 				}
 			}
 		} else {
-			 printf(StrErr_OneWordOnly, count_str);
-			 Print_Enter();
+			 universal_print_error_message(StrErr_OneWordOnly, count_str);
 		}
 	} else {
-		printf(StrErr_EmptyStr, count_str);
-		Print_Enter();
+		universal_print_error_message(StrErr_EmptyStr, count_str);
 	}
 }
 
@@ -117,8 +127,7 @@ int _tmain(int argc, _TCHAR* argv[])
 						buffer = (char*) realloc(buffer, ((Str_Size) * sizeof(char)));
 
 						if(buffer == NULL){
-							printf(StrErr_NotMemory);
-							Print_Enter();
+							universal_print_error_message(StrErr_NotMemory);
 							was_error = 1;
 							break;
 						}
@@ -128,13 +137,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 						if(ferror(file)){
 
-							char txt_error_for_perror[] = "При считывании   строки произошла ошибка ";
-							char str_count_str[MAX_SIZE_STR_NUMB] = "";
-							sprintf(str_count_str, "%d", count_str);
-
-							if ((count_str > 0) && (count_str < 10)){
-								strncpy(txt_error_for_perror+15, str_count_str, 1);
-							}
+							char txt_error_for_perror[SIZE_TXT_FOR_PERROR] = "";
+							sprintf(txt_error_for_perror, StrErr_CouldNotRead, count_str);
 							
 							perror(txt_error_for_perror);
 							was_error = 1;
@@ -150,22 +154,19 @@ int _tmain(int argc, _TCHAR* argv[])
 						i++;
 				}
 				if(!was_error){
-					printf(Str_Res, x, y);
-					Print_Enter();
+					universal_print_error_message(Str_Res, x, y);
 				}
 				free(buffer);
 			} else {
-				printf(StrErr_NotMemory);
-				Print_Enter();
+				universal_print_error_message(StrErr_NotMemory);
 			}
 			fclose(file);
 		} else {
-			printf(StrErr_ErrorOpeningFile, argv[1]);
-			Print_Enter();
+			universal_print_error_message(StrErr_ErrorOpeningFile, argv[1]);
 		}
 	} else {
-		printf(StrErr_FileNotReceived);
-		Print_Enter();
+		universal_print_error_message(StrErr_FileNotReceived);
 	}
 	system("pause");
 }
+
