@@ -28,5 +28,4 @@ extern void My_Printer(STR_ERRORS WhenNotMem_or_FileNotReceived);
 extern void My_Printer(STR_ERRORS WhenErrorOpeningFile, char* NameFile);
 extern void My_Printer(STR_ERRORS WhenErrorInProcessingStr, int NumbStr);
 extern void My_Printer(STR_ERRORS CouldNotRead, int NumbStr, char* StrError);
-
 extern void Print_Enter();
