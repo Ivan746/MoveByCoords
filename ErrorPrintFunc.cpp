@@ -1,57 +1,58 @@
 #include "stdafx.h"
+#include "stdarg.h"
 #include "Key.h"
 
 void Print_Enter()
 {
 	printf("\n");
 }
-
-static void My_PrinterV2(STR_ERRORS numb, int NumbStr = 0, char* NameFile_or_StrError = "")
+/*
+void Data_collection_for_print(char **Array_Mess)
 {
-	switch(numb)
+	Array_Mess;
+	
+}*/
+void universal_print_messages(MES_NUMBERS numb, ...)
+{
+	
+	va_list ptr;
+
+	va_start(ptr, numb);
+
+	switch (numb)
 	{
-		case STR_NOT_A_WORLD_SIDE:
-			printf(StrErr_NotAWorldSide, NumbStr);
+		case MES_NOT_A_WORLD_SIDE:
+			vprintf(StrErr_NotAWorldSide, ptr);
 			break;
-		case STR_ONE_WORD_ONLY:
-			printf(StrErr_OneWordOnly, NumbStr);
+		case MES_ONE_WORD_ONLY:
+			vprintf(StrErr_OneWordOnly, ptr);
 			break;
-		case STR_EMPTY_STR:
-			printf(StrErr_EmptyStr, NumbStr);
+		case MES_EMPTY_STR:
+			vprintf(StrErr_EmptyStr, ptr);
 			break;
-		case STR_COULD_NOT_READ:
-			printf(StrErr_CouldNotRead, NumbStr, NameFile_or_StrError);
+		case MES_COULD_NOT_READ:
+			vprintf(StrErr_CouldNotRead, ptr);
 			break;
-		case STR_NOT_MEMORY:
-			printf(StrErr_NotMemory);
+		case MES_NOT_MEMORY:
+			vprintf(StrErr_NotMemory, ptr);
 			break;
-		case STR_FILE_NOT_RECEIVED:
-			printf(StrErr_FileNotReceived);
+		case MES_FILE_WITH_COORDS_NOT_RECEIVED:
+			vprintf(StrErr_FileWithCoordsNotReceived, ptr);
 			break;
-		case STR_ERROR_OPENING_FILE:
-			printf(StrErr_ErrorOpeningFile, NameFile_or_StrError);
+		case MES_FILE_WITH_MESSAGES_NOT_RECEIVED:
+			vprintf(StrErr_FileWithMessagesNotReceived, ptr);
 			break;
+		case MES_ERROR_OPENING_FILE:
+			vprintf(StrErr_ErrorOpeningFile, ptr);
+			break;
+		case MES_ERROR_PROCESSING_FILE_WITH_MESSAGE:
+			vprintf(StrErr_ErrorProcessingFileWithMessage, ptr);
+			break;
+		case MES_RES_BIAS:
+			vprintf(Str_Res_Bias, ptr);
+			break;
+			
 	}
 	Print_Enter();
-}
-
-
-void My_Printer(STR_ERRORS numb, int NumbStr)
-{
-	My_PrinterV2(numb, NumbStr);
-}
-
-void My_Printer(STR_ERRORS numb)
-{
-	My_PrinterV2(numb);
-}
-
-void My_Printer(STR_ERRORS numb, char* NameFile)
-{
-	My_PrinterV2(numb, 0, NameFile);
-}
-
-void My_Printer(STR_ERRORS numb, int NumbStr, char* StrError)
-{
-	My_PrinterV2(numb, NumbStr, StrError);
+	va_end(ptr);
 }
