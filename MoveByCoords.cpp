@@ -134,12 +134,8 @@ int _tmain(int argc, _TCHAR* argv[])
 						
 					buffer[i] = getc(file);
 
-						if(ferror(file)){
-
-							char txt_error_for_perror[SIZE_TXT_FOR_PERROR] = "";
-							sprintf(txt_error_for_perror, StrErr_CouldNotRead, count_str);
-							
-							perror(txt_error_for_perror);
+						if(!ferror(file)){ 
+							My_Printer(STR_COULD_NOT_READ, count_str, strerror(errno));
 							was_error = 1;
 							break;
 						}
