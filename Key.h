@@ -11,21 +11,28 @@ extern const char StrErr_EmptyStr[];
 extern const char StrErr_CouldNotRead[];
 extern const char StrErr_NotMemory[];
 extern const char StrErr_ErrorOpeningFile[];
-extern const char StrErr_FileNotReceived[];
-extern const char Str_Res[];
+extern const char StrErr_FileWithCoordsNotReceived[];
+extern const char StrErr_FileWithMessagesNotReceived[];
+extern const char StrErr_ErrorProcessingFileWithMessage[];
+extern const char Str_Res_Bias[];
 
-enum STR_ERRORS{
-STR_NOT_A_WORLD_SIDE = 1,
-STR_ONE_WORD_ONLY,
-STR_EMPTY_STR,
-STR_COULD_NOT_READ,
-STR_NOT_MEMORY,
-STR_ERROR_OPENING_FILE,
-STR_FILE_NOT_RECEIVED
+//extern char **Array_Mess;
+
+enum MES_NUMBERS{
+MES_NOT_A_WORLD_SIDE = 1,
+MES_ONE_WORD_ONLY,
+MES_EMPTY_STR,
+MES_COULD_NOT_READ,
+MES_NOT_MEMORY,
+MES_ERROR_OPENING_FILE,
+MES_FILE_WITH_COORDS_NOT_RECEIVED,
+MES_FILE_WITH_MESSAGES_NOT_RECEIVED,
+MES_ERROR_PROCESSING_FILE_WITH_MESSAGE,
+MES_RES_BIAS
 };
 
-extern void My_Printer(STR_ERRORS WhenNotMem_or_FileNotReceived);
-extern void My_Printer(STR_ERRORS WhenErrorOpeningFile, char* NameFile);
-extern void My_Printer(STR_ERRORS WhenErrorInProcessingStr, int NumbStr);
-extern void My_Printer(STR_ERRORS CouldNotRead, int NumbStr, char* StrError);
+//void Data_collection_for_print(char** Array_Mess);
+extern char ** Processing_Array_Message(int *Numb_Str_Array_Mess, int *was_error_Proc_Array_Mess, char * File_Name);
+extern void universal_print_messages(MES_NUMBERS numb, ...);
+
 extern void Print_Enter();
