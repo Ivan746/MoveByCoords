@@ -19,17 +19,6 @@ void Print_Enter()
 	printf("\n");
 }
 
-void universal_print_error_message(const char* Txt_Error, ...)
-{
-	va_list ptr;
-
-	va_start(ptr, Txt_Error);
-	vprintf(Txt_Error, ptr);
-	Print_Enter();
-
-	va_end(ptr);
-}
-
 void MagStr (char *str)
 {
 
