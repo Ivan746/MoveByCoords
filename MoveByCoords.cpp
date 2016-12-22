@@ -86,16 +86,16 @@ void Bias(char *str, int count_str, int *x, int *y)
 						if (!strncmp(West, str, Numb_simv)){
 							*x -= atoi(buffer);
 						} else {
-							universal_print_error_message(StrErr_NotAWorldSide, count_str);
+							My_Printer(STR_NOT_A_WORLD_SIDE, count_str);
 						}
 					}
 				}
 			}
 		} else {
-			 universal_print_error_message(StrErr_OneWordOnly, count_str);
+			 My_Printer(STR_ONE_WORD_ONLY, count_str);
 		}
 	} else {
-		universal_print_error_message(StrErr_EmptyStr, count_str);
+		My_Printer(STR_EMPTY_STR, count_str);
 	}
 }
 
@@ -127,7 +127,7 @@ int _tmain(int argc, _TCHAR* argv[])
 						buffer = (char*) realloc(buffer, ((Str_Size) * sizeof(char)));
 
 						if(buffer == NULL){
-							universal_print_error_message(StrErr_NotMemory);
+							My_Printer(STR_NOT_MEMORY);
 							was_error = 1;
 							break;
 						}
@@ -154,18 +154,19 @@ int _tmain(int argc, _TCHAR* argv[])
 						i++;
 				}
 				if(!was_error){
-					universal_print_error_message(Str_Res, x, y);
+					printf(Str_Res, x, y);
+					Print_Enter();
 				}
 				free(buffer);
 			} else {
-				universal_print_error_message(StrErr_NotMemory);
+				My_Printer(STR_NOT_MEMORY);
 			}
 			fclose(file);
 		} else {
-			universal_print_error_message(StrErr_ErrorOpeningFile, argv[1]);
+			My_Printer(STR_ERROR_OPENING_FILE, argv[1]); 
 		}
 	} else {
-		universal_print_error_message(StrErr_FileNotReceived);
+		My_Printer(STR_FILE_NOT_RECEIVED);
 	}
 	system("pause");
 }
