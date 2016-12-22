@@ -99,7 +99,6 @@ void Bias(char *str, int count_str, int *x, int *y)
 	}
 }
 
-
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_CTYPE, "Russian_Russia.1251");
@@ -170,4 +169,3 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	system("pause");
 }
-
