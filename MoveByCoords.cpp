@@ -8,15 +8,11 @@
 #include <cstring>
 #include "Key.h"
 
-char ** Array_Mess = NULL;
-
 #define START_STR_SIZE 8
 #define INCREMENTS 4
 #define MAX_SIZE_STR_NUMB 20
-#define NUMB_STR_ARRAY_MESS 4
 
-
-void MagStr (char *str)
+static void MagStr (char *str)
 {
 
 	int i, j = 0;
@@ -42,7 +38,7 @@ void MagStr (char *str)
 	str[j] = '\0';
 }
 
-void Bias(char *str, int count_str, int *x, int *y)
+static void Bias(char *str, int count_str, int *x, int *y)
 {
 	
 	int Strlen_Str = strlen(str);
@@ -91,12 +87,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 	if (argc > 1){
 
-		int Numb_Str_Array_Mess = NUMB_STR_ARRAY_MESS;
-		int was_error_Proc_Array_Mess = 0;
+		int Numb_Str_Array_Mess = 0;
 
-		was_error_Proc_Array_Mess = Processing_Array_Message(&Numb_Str_Array_Mess, argv[1]);
+		Numb_Str_Array_Mess = Processing_Array_Message(argv[1]);
 
-		if (!was_error_Proc_Array_Mess){
+		if (Numb_Str_Array_Mess){
 	
 			if (argc > 2){
 	
@@ -150,6 +145,7 @@ int _tmain(int argc, _TCHAR* argv[])
 					} else {
 						universal_print_messages(MES_NOT_MEMORY_SYS);
 					}
+
 					fclose(file_with_coords);
 				} else {
 					universal_print_messages(MES_ERROR_OPENING_FILE_SYS, argv[2]); 
@@ -157,12 +153,8 @@ int _tmain(int argc, _TCHAR* argv[])
 			} else {
 				universal_print_messages(MES_FILE_WITH_COORDS_NOT_RECEIVED);
 			}
-
-			for (int i = 0; i < Numb_Str_Array_Mess; i++){
-				free(Array_Mess[i]);
-			}
-			free(Array_Mess);
-
+		
+			freeMem(Array_Mess, Numb_Str_Array_Mess); 
 		} else {
 			universal_print_messages(MES_ERROR_PROCESSING_FILE_WITH_MESSAGE_SYS, argv[1]);
 		}
@@ -171,4 +163,3 @@ int _tmain(int argc, _TCHAR* argv[])
 	}	
 	system("pause");
 }
-
