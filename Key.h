@@ -19,15 +19,18 @@ MES_NOT_MEMORY_SYS,
 MES_ERROR_OPENING_FILE_SYS,
 MES_FILE_WITH_MESSAGES_NOT_RECEIVED_SYS,
 MES_ERROR_PROCESSING_FILE_WITH_MESSAGE_SYS,
+NUMB_SYS_MESSAGE = MES_ERROR_PROCESSING_FILE_WITH_MESSAGE_SYS, /** счетчик системных сообщений */
 MES_NOT_A_WORLD_SIDE,
 MES_ONE_WORD_ONLY,
 MES_EMPTY_STR,
 MES_FILE_WITH_COORDS_NOT_RECEIVED,
-MES_RES_BIAS
+MES_RES_BIAS,
+TOT_NUMB_MESS = MES_RES_BIAS
 };
 
-extern int Processing_Array_Message(int *Numb_Str_Array_Mess, char * File_Name);
+extern int Processing_Array_Message(char * File_Name);
 extern void universal_print_messages(MES_NUMBERS numb, ...);
+extern void freeMem(char ** Array_Mess, int Numb_Str_Array_Mess);
 
 extern void Print_Enter();
 
