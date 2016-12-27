@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Key.h"
 
+/** List of light side */
 const char West[]  = "Запад";
 const char East[]  = "Восток";
 const char North[] = "Север";
